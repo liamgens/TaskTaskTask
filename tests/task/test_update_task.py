@@ -21,7 +21,24 @@ class TestUpdateTask(BaseTestCase):
         queried_task = Task.query.filter_by(id=received_id).first()
 
         self.assertEqual(
-            received[0]["args"][0]["title"], getattr(queried_task, "title")
+            "Changed_title", getattr(queried_task, "title")
+        )
+        self.assertEqual(
+            2, getattr(queried_task, "task_list_id")
         )
 
-    # def test_changes_and_dne(self):
+    def test_changes_and_dne(self):
+        updated_task = {
+            "id": 1,
+            "title": "Changed_title",
+            "task_list_id": 2
+        }
+
+        self.client.get_received()
+        self.client.emit("update_task", updated_task)
+        received = self.client.get_received()
+        received_message = received[0]["args"][0]["error"]
+
+        self.assertEqual(
+            "Task does not exit.", received_message
+        )
