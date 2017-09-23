@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -9,6 +10,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 
 db = SQLAlchemy(app)
+
+
+socketio = SocketIO(app)
 
 
 from app.views import task_list
