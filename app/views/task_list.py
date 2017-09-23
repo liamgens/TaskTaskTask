@@ -1,27 +1,30 @@
-from app import app
-from app.models.task_list import TaskList
+from flask import jsonify
+
+from app import socketio
+from app.models import TaskList
 
 
-@app.route("/tasklist", methods=["GET"])
+@socketio.on("get_task_lists")
 def get_all_task_lists():
-    return str(TaskList.query.all())
+    task_lists = TaskList.query.all()
+    return jsonify(task_lists=[task_list.json for task_list in task_lists])
 
 
-@app.route("/tasklist", methods=["POST"])
+@socketio.on("create_task_list")
 def create_task_list():
     pass
 
 
-@app.route("/tasklist/<int:id>", methods=["GET"])
-def get_task_list(id):
+@socketio.on("get_task_list")
+def get_task_list():
     pass
 
 
-@app.route("/tasklist/<int:id>", methods=["POST"])
-def update_task_list(id):
+@socketio.on("update_task_list")
+def update_task_list():
     pass
 
 
-@app.route("/tasklist/<int:id>", methods=["DELETE"])
-def delete_task_list(id):
+@socketio.on("delete_task_list")
+def delete_task_list():
     pass
