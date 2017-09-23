@@ -20,6 +20,6 @@ class TestDeleteTask(BaseTestCase):
             Task.query.filter_by(id=received_id).first()
         )
 
-    def test_delete_non_exisiting(self):
+    # def test_delete_non_exisiting(self):
         # assertEquals
         # received[0]["args"][0]["error"], "Task does not exist"
