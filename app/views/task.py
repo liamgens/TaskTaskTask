@@ -1,5 +1,5 @@
-from flask import jsonify
-from app import socketio
+from app import db, socketio
+from flask_socketio import emit
 from app.models import Task
 import json
 
@@ -14,7 +14,8 @@ def create_task(data):
     elif task_list_id is None:
         emit("create_task", {"error": "Tasks must have a parent Task List."})
     else:
-        new_task = Task(data.title, data.description, data.task_list_id)
+        new_task = Task(data["title"], data["description"],
+                        data["task_list_id"])
         db.session.add(new_task)
         db.session.commit()
         emit("create_task", new_task.as_json, broadcast=True)
@@ -38,12 +39,12 @@ def update_task(data):
 @socketio.on("delete_task")
 def delete_task(data):
     old_task = Task.query.filter_by(id=data["id"]).first()
-    if task is None:
+    if old_task is None:
         emit("delete_task", {"error": "Task does not exit."})
     else:
         db.session.delete(old_task)
         db.session.commit()
-        data = dict(
-            id=data["id"]
-        )
+        data = {
+            "id": data["id"],
+        }
         emit("delete_task", data, broadcast=True)
