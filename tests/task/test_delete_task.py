@@ -29,5 +29,5 @@ class TestDeleteTask(BaseTestCase):
         received_id = received[0]["args"][0]["error"]
 
         self.assertEquals(
-            received_id, "Task does not exit."
+            received_id, "Task does not exist."
         )

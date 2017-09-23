@@ -40,7 +40,7 @@ def update_task(data):
 def delete_task(data):
     old_task = Task.query.filter_by(id=data["id"]).first()
     if old_task is None:
-        emit("delete_task", {"error": "Task does not exit."})
+        emit("delete_task", {"error": "Task does not exist."})
     else:
         db.session.delete(old_task)
         db.session.commit()
