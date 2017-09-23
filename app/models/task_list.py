@@ -10,10 +10,13 @@ class TaskList(db.Model):
         self.title = title
         self.description = description
 
-    @property
-    def as_json(self):
-        return dict(
+    def as_json(self, include_tasks=False):
+        data = dict(
             id=self.id,
             title=self.title,
             description=self.description,
         )
+        if include_tasks:
+            tasks = [task.as_json for task in self.tasks.all()]
+            data["tasks"] = tasks
+        return data

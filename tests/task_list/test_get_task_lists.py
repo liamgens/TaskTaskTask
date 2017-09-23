@@ -13,7 +13,7 @@ class TestGetTaskLists(BaseTestCase):
             received[0]["args"],
             [{"task_lists": []}])
 
-    def test_one_item(self):
+    def test_single(self):
         task_list = TaskList("Foo", "Bar")
         self.db.session.add(task_list)
         self.db.session.commit()
@@ -29,7 +29,7 @@ class TestGetTaskLists(BaseTestCase):
             ]}]
         )
 
-    def test_two_items(self):
+    def test_multiple(self):
         task_lists = [
             TaskList("Foo", "Bar"),
             TaskList("Baz"),

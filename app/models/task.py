@@ -5,11 +5,14 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
-    task_list_id = db.Column(db.Integer, nullable=False)
+    task_list_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), nullable=False)
     is_complete = db.Column(db.Boolean, default=False)
     in_progress = db.Column(db.Boolean, default=False)
     assignee = db.Column(db.String)
-    parent_id = db.Column(db.Integer)
+    parent_id = db.Column(db.Integer, db.ForeignKey("task.id"))
+
+    task_list = db.relationship("TaskList", backref=db.backref("tasks", lazy="dynamic"))
+    parent = db.relationship("Task", backref=db.backref("children", remote_side=[id]))
 
     def __init__(self, title, description, task_list_id):
         self.title = title

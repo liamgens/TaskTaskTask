@@ -8,7 +8,7 @@ from app.models import TaskList
 def get_task_lists():
     task_lists = TaskList.query.all()
     emit("get_task_lists",
-         {"task_lists": [task_list.as_json for task_list in task_lists]})
+         {"task_lists": [task_list.as_json() for task_list in task_lists]})
 
 
 @socketio.on("create_task_list")
@@ -21,7 +21,7 @@ def create_task_list(data):
         task_list = TaskList(title, description)
         db.session.add(task_list)
         db.session.commit()
-        emit("create_task_list", {"task_list": task_list.as_json}, broadcast=True)
+        emit("create_task_list", {"task_list": task_list.as_json()}, broadcast=True)
 
 
 @socketio.on("get_task_list")
@@ -30,7 +30,7 @@ def get_task_list(data):
     if task_list is None:
         emit("get_task_list", {"error": "Task list not found."})
     else:
-        emit("get_task_list", {"task_list": task_list.as_json})
+        emit("get_task_list", {"task_list": task_list.as_json(include_tasks=True)})
 
 
 @socketio.on("update_task_list")
@@ -42,7 +42,7 @@ def update_task_list(data):
         task_list.title = data.get("title", task_list.title)
         task_list.description = data.get("description", task_list.description)
         db.session.commit()
-        emit("update_task_list", {"task_list": task_list.as_json}, broadcast=True)
+        emit("update_task_list", {"task_list": task_list.as_json()}, broadcast=True)
 
 
 @socketio.on("delete_task_list")
