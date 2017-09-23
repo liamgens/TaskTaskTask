@@ -11,13 +11,14 @@
   <script type="text/javascript" charset="utf-8">
       var socket = io.connect('http://' + document.domain + ':' + location.port);
       socket.on('connect', function () {
-          socket.emit('get_task_lists_request');
+          socket.emit('get_task_lists');
       });
-      socket.on('get_task_lists_response', function (data) {
+      socket.on('get_task_lists', function (data) {
         console.log(data);
-        socket.emit('get_task_list_request', {id: 1});
+        socket.emit('get_task_list', {id: 1});
+        socket.emit('get_task_list', {id: 99999});
       });
-      socket.on('get_task_list_response', function (data) {
+      socket.on('get_task_list', function (data) {
         console.log(data);
       });
   </script>
