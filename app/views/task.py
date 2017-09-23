@@ -3,7 +3,7 @@ from flask_socketio import emit
 from app.models import Task
 import json
 
-
+#method to create tasks - gives error if no title or id
 @socketio.on("create_task")
 def create_task(data):
     title = data.get("title")
@@ -20,7 +20,7 @@ def create_task(data):
         db.session.commit()
         emit("create_task", new_task.as_json, broadcast=True)
 
-
+#method that takes a change in a task and updates it to all devices - gives error if there is no task to update
 @socketio.on("update_task")
 def update_task(data):
     task = Task.query.filter_by(id=data["id"]).first()
@@ -35,7 +35,7 @@ def update_task(data):
         db.session.commit()
         emit("update_task", response, broadcast=True)
 
-
+#method to delete tasks - gives error if no task to delete
 @socketio.on("delete_task")
 def delete_task(data):
     old_task = Task.query.filter_by(id=data["id"]).first()
