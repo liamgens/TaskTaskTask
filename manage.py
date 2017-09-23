@@ -1,3 +1,5 @@
+import  unittest
+
 from flask_script import Manager
 
 from app import app, db, models, socketio
@@ -14,6 +16,12 @@ def make_shell_context():
 @manager.command
 def runserver():
    socketio.run(app)
+
+
+@manager.command
+def test():
+    tests = unittest.TestLoader().discover("tests")
+    unittest.TextTestRunner().run(tests)
 
 
 if __name__ == "__main__":
