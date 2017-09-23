@@ -4,19 +4,19 @@ from app import db, socketio
 from app.models import TaskList
 
 
-@socketio.on("get_task_lists_request")
-def get_all_task_lists():
+@socketio.on("get_task_lists")
+def get_task_lists():
     task_lists = TaskList.query.all()
-    emit("get_task_lists_response",
+    emit("get_task_lists",
          {"task_lists": [task_list.as_json for task_list in task_lists]})
 
 
-@socketio.on("create_task_list_request")
+@socketio.on("create_task_list")
 def create_task_list(data):
     title = data.get("title")
     description = data.get("description", "")
     if title is None:
-        emit("create_task_list_response", {"error": "Task lists must have a title."})
+        emit("create_task_list", {"error": "Task lists must have a title."})
 
     task_list = TaskList(title, description)
     db.session.add(task_list)
@@ -24,20 +24,20 @@ def create_task_list(data):
     emit("create_task_list", {"task_list": task_list.as_json}, broadcast=True)
 
 
-@socketio.on("get_task_list_request")
+@socketio.on("get_task_list")
 def get_task_list(data):
     task_list = TaskList.query.filter_by(id=data.get("id")).first()
     if task_list is None:
-        emit("get_task_list_response", {"error": "Task list not found."})
+        emit("get_task_list", {"error": "Task list not found."})
 
-    emit("get_task_list_response", {"task_list": task_list.as_json})
+    emit("get_task_list", {"task_list": task_list.as_json})
 
 
-@socketio.on("update_task_list_request")
+@socketio.on("update_task_list")
 def update_task_list(data):
     task_list = TaskList.query.filter_by(id=data.get("id")).first()
     if task_list is None:
-        emit("update_task_list_response", {"error": "Task list not found."})
+        emit("update_task_list", {"error": "Task list not found."})
 
     task_list.title = data.get("title", task_list.title)
     task_list.description = data.get("description", task_list.description)
@@ -45,13 +45,13 @@ def update_task_list(data):
     emit("update_task_list", {"task_list": task_list.as_json}, broadcast=True)
 
 
-@socketio.on("delete_task_list_request")
+@socketio.on("delete_task_list")
 def delete_task_list(data):
     task_list = TaskList.query.filter_by(id=data.get("id")).first()
     if task_list is None:
-        emit("delete_task_list_response",
+        emit("delete_task_list",
              dict(error="Task list not found."))
 
     db.session.delete(task_list)
     db.session.commit()
-    emit("delete_task_list_request", data, broadcast=True)
+    emit("delete_task_list", data, broadcast=True)
