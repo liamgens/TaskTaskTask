@@ -9,3 +9,7 @@ class TaskList(db.Model):
     def __init__(self, title, description=None):
         self.title = title
         self.description = description
+
+    @property
+    def json(self):
+        return dict(id=self.id, title=self.title, description=self.description)
