@@ -1,17 +1,9 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.sqlite3"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-db.create_all()
+from app import app
+from app.models.task_list import TaskList
 
 
 @app.route("/tasklist", methods=["GET"])
 def get_all_task_lists():
-    from models.task_list import TaskList
     return str(TaskList.query.all())
 
 
@@ -33,7 +25,3 @@ def update_task_list(id):
 @app.route("/tasklist/<int:id>", methods=["DELETE"])
 def delete_task_list(id):
     pass
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
