@@ -11,5 +11,7 @@ class Task(db.Model):
     parent_id = db.Column(db.Integer)
     task_list_id = db.Column(db.Integer, nullable=False)
 
-
-
+    def __init__(self, title, description, task_list_id):
+        self.title = title
+        self.description = description
+        self.task_list_id = task_list_id

@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -6,32 +6,33 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.sqlite3"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+db.create_all()
 
 
-@app.route("/")
-def test():
-    return "test"
-
-@app.route("/tasklist", methods=["GET", "POST"])
-def tasklist():
-    if request.method == "GET":
-        pass
-    elif request.method == "POST":
-        pass
-    
+@app.route("/tasklist", methods=["GET"])
+def get_all_task_lists():
+    from models.task_list import TaskList
+    return str(TaskList.query.all())
 
 
-@app.route("/tasklist/<tasklist_id>", methods=["GET", "POST", "DELETE"])
-def tasklist(tasklist_id):
-    if request.method == "GET":
-        pass
-    elif request.method == "POST":
-        pass
-    elif request.method == "DELETE":
-        pass
+@app.route("/tasklist", methods=["POST"])
+def create_task_list():
+    pass
 
 
+@app.route("/tasklist/<int:id>", methods=["GET"])
+def get_task_list(id):
+    pass
 
+
+@app.route("/tasklist/<int:id>", methods=["POST"])
+def update_task_list(id):
+    pass
+
+
+@app.route("/tasklist/<int:id>", methods=["DELETE"])
+def delete_task_list(id):
+    pass
 
 
 if __name__ == "__main__":
