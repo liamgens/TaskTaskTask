@@ -11,8 +11,7 @@ class TestGetTaskLists(BaseTestCase):
         self.assertEqual(len(received), 1)
         self.assertEqual(
             received[0]["args"],
-            [{"task_lists": []}]
-        )
+            [{"task_lists": []}])
 
     def test_one_item(self):
         task_list = TaskList("Foo", "Bar")

@@ -10,8 +10,7 @@ class TestCreateTaskList(BaseTestCase):
         self.assertEqual(len(received), 1)
         self.assertEqual(
             received[0]["args"],
-            [{"error": "Task lists must have a title."}]
-        )
+            [{"error": "Task lists must have a title."}])
 
     def test_valid_title(self):
         self.client.get_received()
