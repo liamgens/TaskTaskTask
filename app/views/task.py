@@ -27,10 +27,10 @@ def update_task(data):
     if task is None:
         emit("update_task", {"error": "Task does not exit."})
     else:
-        reponse = data
+        response = data
         for attribute, value in data.items():
             if attribute != "id":
-                task[attribute] = value
+                setattr(task, attribute, value)
                 response[attribute] = value
         db.session.commit()
         emit("update_task", response, broadcast=True)
