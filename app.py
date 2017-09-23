@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -11,6 +11,27 @@ db = SQLAlchemy(app)
 @app.route("/")
 def test():
     return "test"
+
+@app.route("/tasklist", methods=["GET", "POST"])
+def tasklist():
+    if request.method == "GET":
+        pass
+    elif request.method == "POST":
+        pass
+    
+
+
+@app.route("/tasklist/<tasklist_id>", methods=["GET", "POST", "DELETE"])
+def tasklist(tasklist_id):
+    if request.method == "GET":
+        pass
+    elif request.method == "POST":
+        pass
+    elif request.method == "DELETE":
+        pass
+
+
+
 
 
 if __name__ == "__main__":
