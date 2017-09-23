@@ -2,51 +2,43 @@ from app.models import TaskList
 from tests import BaseTestCase
 
 
-class TestGetTaskLists(BaseTestCase):
+class TestGetTaskList(BaseTestCase):
 
-    def test_empty(self):
+    def test_invalid_bad_id(self):
         self.client.get_received()
-        self.client.emit("get_task_lists")
+        self.client.emit("get_task_list", {"id": 1})
         received = self.client.get_received()
         self.assertEqual(len(received), 1)
         self.assertEqual(
             received[0]["args"],
-            [{"task_lists": []}])
+            [{"error": "Task list not found."}]
+        )
 
-    def test_one_item(self):
+    def test_valid_single(self):
         task_list = TaskList("Foo", "Bar")
         self.db.session.add(task_list)
         self.db.session.commit()
 
         self.client.get_received()
-        self.client.emit("get_task_lists")
+        self.client.emit("get_task_list", {"id": 1})
         received = self.client.get_received()
         self.assertEqual(len(received), 1)
         self.assertEqual(
             received[0]["args"],
-            [{"task_lists": [
-                {"id": 1, "title": "Foo", "description": "Bar"},
-            ]}]
-        )
+            [{"task_list": {"id": 1, "title": "Foo", "description": "Bar"}}])
 
-    def test_two_items(self):
+    def test_valid_multiple(self):
         task_lists = [
             TaskList("Foo", "Bar"),
-            TaskList("Baz"),
-            TaskList("Bat"),
+            TaskList("Baz", ""),
         ]
         self.db.session.add_all(task_lists)
         self.db.session.commit()
 
         self.client.get_received()
-        self.client.emit("get_task_lists")
+        self.client.emit("get_task_list", {"id": 2})
         received = self.client.get_received()
         self.assertEqual(len(received), 1)
         self.assertEqual(
             received[0]["args"],
-            [{"task_lists": [
-                {"id": 1, "title": "Foo", "description": "Bar"},
-                {"id": 2, "title": "Baz", "description": ""},
-                {"id": 3, "title": "Bat", "description": ""},
-            ]}]
-        )
+            [{"task_list": {"id": 2, "title": "Baz", "description": ""}}])
