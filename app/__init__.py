@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 
@@ -17,3 +17,8 @@ socketio = SocketIO(app)
 
 from app.views import task_list
 from app.views import task
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
