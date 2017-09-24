@@ -6,8 +6,11 @@
   background: $accent-color;
   color: $print-color;
   height: $interaction-size * 1.5;
-  margin-bottom: $spacing;
   padding: 0 $spacing;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 
   > .logo {
     color: $white-color;

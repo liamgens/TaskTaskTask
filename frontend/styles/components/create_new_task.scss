@@ -1,20 +1,24 @@
 @import '../variables';
 
 .component__create_new_task {
-  margin-left: 1.4rem;
+  border-left: 1px solid $muted-color;
+  padding-top: 0.25rem;
+  padding-left: 2.25rem;
 
   > input {
     background: transparent;
     border: 0;
-    border-bottom: 1px solid $muted-color;
+    border-bottom: 1px solid $accent-color;
     border-radius: 0;
     display: inline-block;
     height: $input-height;
+    margin-left: 1rem;
+    padding: 0;
     width: $text-input-width;
 
     &:active, &:focus, &:hover {
       border: 0;
-      border-bottom: 1px solid $accent-color;
+      border-bottom: 1px solid $accent-secondary-color;
     }
   }
 

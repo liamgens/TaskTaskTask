@@ -79,12 +79,27 @@ export default class Task extends React.Component {
               onFocus={ this.handleFocus }
               onKeyPress={ this.handleEnter }
               value={ this.state.isEditing ? this.state.description : this.props.description } />
-        <div className="add_sublist" onClick={ this.state.isEditing ? this.handleDelete : this.handleAddSublist }>
-          <Icon name={ this.state.isEditing ? "close" : "add" } description="add" style={
-            { height: '1rem', width: '1rem', }
-          } />
+        <div className="icons">
+          <div className="add_sublist" onClick={ this.handleDelete }>
+            <Icon name="close" description="close" style={
+              { height: '1rem', width: '1rem', }
+            } />
+          </div>
+          {
+            !this.props.sublistId && (
+              <div className="add_sublist" onClick={ this.handleAddSublist }>
+                <Icon name="add" description="add" style={
+                  { height: '1rem', width: '1rem', }
+                } />
+              </div>
+            )
+          }
         </div>
-        { this.props.sublistId ? <TaskList listId={ this.props.sublistId } /> : '' }
+        { 
+          this.props.sublistId && (
+            <TaskList listId={ this.props.sublistId } />
+          )
+        }
       </div>
     )
   }

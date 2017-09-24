@@ -1,6 +1,8 @@
 @import '../variables';
 
 .component__task {
+  border-left: 1px solid $muted-color;
+  padding: 0.2rem 0 0.4rem $spacing / 2;
   white-space: nowrap;
     
   > input[type="text"] {
@@ -9,6 +11,9 @@
     border-radius: 0;
     display: inline-block;
     height: $input-height;
+    margin-left: 1rem;
+    margin-bottom: 0.2rem;
+    padding: 0;
     width: $text-input-width;
   }
 
@@ -18,11 +23,15 @@
     margin-bottom: 0;
   }
 
-  > .add_sublist {
-    text-align: center;
+  > .icons {
     display: inline-block;
-    height: $input-height;
-    width: $input-height;
+
+    > .add_sublist {
+      display: inline-block;
+      text-align: center;
+      height: $input-height;
+      width: $input-height;
+    }
   }
 
   > .component__task_list {
