@@ -1,13 +1,16 @@
 import io from 'socket.io-client'
+import store from 'react-easy-store'
 
 import enums from './enums'
-
-export const lists = {}
-export const tasks = {}
 
 export let socket = null
 export function connectSocket() {
   socket = io('http://' + document.domain + ':' + location.port)
+
+  store.setState({
+    lists: {},
+    tasks: {},
+  })
 
   onConnect()
   onCreateTaskList()
@@ -22,7 +25,26 @@ function onConnect() {
 function onCreateTaskList() {
   socket.on(enums.CREATE_TASK_LIST, data => {
     debug(enums.CREATE_TASK_LIST, [ data, ])
+
+    const { lists } = store.getState('lists')
     lists[data.id] = []
+
+    store.setState({
+      lists: lists
+    })
+  })
+}
+
+function onReadTaskList() {
+  socket.on(enums.READ_TASK_LIST, data => {
+    debug(enums.READ_TASK_LIST, [ data, ])
+
+    const { lists } = store.getState('lists')
+    lists[data.id] = data.tasks
+
+    store.setState({
+      lists: lists
+    })
   })
 }
 

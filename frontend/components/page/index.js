@@ -1,18 +1,22 @@
 import React from 'react'
-
-import { lists, tasks, } from '../../store'
+import store from 'react-easy-store'
 
 import TaskList from '../task_list'
 
-export default class Page extends React.Component {
-  constructor(props) {
-    super(props)    
-  }
+const TaskListConnect = store.connect(TaskList)({
+  lists: 'list',
+  tasks: 'tasks',
+})
 
+export default class Page extends React.Component {
   render() {
+    const TaskListContainer = TaskListConnect({
+      listId: this.props.listId,
+    })
+
     return (
       <div className="component__page">
-        <TaskList listId={ this.props.listId } />
+        <TaskListContainer />
       </div>
     )
   }

@@ -1,24 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import store from 'react-easy-store'
 
-import { lists, tasks, } from '../../store'
+import { readTaskList, } from '../../store/api'
 
 import Task from '../task'
+import CreateNewTask from '../create_new_task'
 
 export default class TaskList extends React.Component {
   constructor(props) {
-    super()
+    super(props)
 
-    this.state = {
-      tasks: lists[props.listId],
-    }
+    readTaskList(props.listId)
   }
 
   render() {
-    console.log(this.state.tasks)
+    const { lists, tasks, } = store.getState('lists', 'tasks')
+
     return (
       <div className="component__task_list">
-        { this.state.tasks.map((taskId, index) => <Task taskId={ taskId } key={ index } />) }
+        <div className="tasks">
+        {
+          lists && lists[this.props.listId] && 
+          lists[this.props.listId].map((taskId, index) => (
+            <Task taskId={ taskId } key={ index } />
+          ))
+        }
+        </div>
+        <CreateNewTask listId={ this.props.listId } />
       </div>
     )
   }

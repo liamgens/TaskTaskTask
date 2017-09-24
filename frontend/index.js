@@ -16,6 +16,13 @@ connectSocket()
 // Obtain the listId from the query parameters.
 const listId = Number(getQueryParameterByName('q')) || null
 
+// const PageContainer = store.connect(Page)({
+//   lists: 'lists',
+//   tasks: 'tasks',
+// })({
+//   listId: listId,
+// })
+
 ReactDOM.render(
   <div>
     { listId ? <Page listId={ listId } /> : <CreateNewList /> }

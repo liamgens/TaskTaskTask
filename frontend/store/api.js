@@ -8,3 +8,16 @@ export function createTaskList(taskId = null) {
     location.href = location.href + '?q=' + data.id
   })
 }
+
+export function readTaskList(listId) {
+  socket.emit(enums.READ_TASK_LIST, {
+    id: listId,
+  })
+}
+
+export function createTask(listId, description) {
+  socket.emit(enums.READ_TASK_LIST, {
+    description: description,
+    list_id: listId,
+  })
+}

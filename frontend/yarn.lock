@@ -2328,7 +2328,15 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.4, lodash@~4.17.4:
+lodash@4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.6.1.tgz#df00c1164ad236b183cfc3887a5e8d38cc63cbbc"
+
+lodash@^3.10.1:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+
+lodash@^4.0.0, lodash@^4.11.1, lodash@^4.14.0, lodash@^4.17.4, lodash@~4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -3210,6 +3218,20 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
+react-easy-store@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/react-easy-store/-/react-easy-store-0.1.20.tgz#70c4fe213d1ec4f7cbf0c26d2ae1b7fc8f41c0ef"
+  dependencies:
+    lodash "^4.11.1"
+    react-stamp "^0.5.0"
+
+react-stamp@^0.5.0:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/react-stamp/-/react-stamp-0.5.1.tgz#b9767bdde023864492bb69ed59563bd8c10719b8"
+  dependencies:
+    lodash "4.6.1"
+    stamp-utils "1.2.4"
+
 react@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
@@ -3632,6 +3654,12 @@ sshpk@^1.7.0:
     ecc-jsbn "~0.1.1"
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
+
+stamp-utils@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/stamp-utils/-/stamp-utils-1.2.4.tgz#be35c224abfeb0b86d46df3d98b7711cd3e47ff4"
+  dependencies:
+    lodash "^3.10.1"
 
 stdout-stream@^1.4.0:
   version "1.4.0"
