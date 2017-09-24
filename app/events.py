@@ -12,7 +12,7 @@ def create_task_list(data=None):
     if isinstance(task_id, int):
         task = Task.query.filter_by(id=task_id).first()
         if task is None:
-            socketio.emit("create_task_list", {"error": "create_task_list with invalid task_id"})
+            socketio.emit("create_task_list", {"error": "create_task_list with task_id of non-existent object"})
             return False
         elif task.sublist is not None:
             socketio.emit("create_task_list", {"error": "create_task_list overwriting existing task_id"})
@@ -42,7 +42,7 @@ def read_task_list(data):
 
     task_list = TaskList.query.filter_by(id=task_list_id).first()
     if task_list is None:
-        socketio.emit("read_task_list", {"error": "read_task_list with invalid task_list_id"})
+        socketio.emit("read_task_list", {"error": "read_task_list with task_list_id of non-existent object"})
         return False
 
     socketio.emit("read_task_list", task_list.as_json())
@@ -81,7 +81,7 @@ def update_task(data):
 
     task = Task.query.filter_by(id=task_id).first()
     if task is None:
-        socketio.emit("update_task", {"error": "update_task with invalid task_id"})
+        socketio.emit("update_task", {"error": "update_task with task_id of non-existent object"})
         return False
 
     task.description = data.get("description", task.description)
@@ -102,7 +102,7 @@ def remove_task(data):
 
     task = Task.query.filter_by(id=task_id).first()
     if task is None:
-        socketio.emit("remove_task", {"error": "remove_task with invalid task_id"})
+        socketio.emit("remove_task", {"error": "remove_task with task_id of non-existent object"})
         return False
 
     _remove_task_list(task.sublist)
