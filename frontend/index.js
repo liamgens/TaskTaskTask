@@ -5,7 +5,6 @@ import { getQueryParameterByName, } from './utils/query';
 
 import { connectSocket, } from './store'
 
-import CreateNewList from './components/create_new_list'
 import Landing from './components/landing'
 import Page from './components/page'
 
@@ -16,13 +15,6 @@ connectSocket()
 
 // Obtain the listId from the query parameters.
 const listId = Number(getQueryParameterByName('q')) || null
-
-// const PageContainer = store.connect(Page)({
-//   lists: 'lists',
-//   tasks: 'tasks',
-// })({
-//   listId: listId,
-// })
 
 ReactDOM.render(
   <div>
