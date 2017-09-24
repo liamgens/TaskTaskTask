@@ -3,10 +3,10 @@ from .models import Task, TaskList
 
 
 @socketio.on("create_task_list")
-def create_task_list(data):
+def create_task_list(data=None):
     """Create a task list (with an optional task_id for making it a sublist of a task)."""
 
-    task_id = data.get("task_id")
+    task_id = data and data.get("task_id")
     task = None
 
     if isinstance(task_id, int):
@@ -28,6 +28,24 @@ def create_task_list(data):
         socketio.emit("update_task", task.as_json())
 
     socketio.emit("create_task_list", task_list.as_json())
+
+
+@socketio.on("read_task_list")
+def read_task_list(data):
+    """Read a task list (specified via task_list_id)."""
+
+    task_list_id = data.get("id")
+
+    if not isinstance(task_list_id, int):
+        socketio.emit("read_task_list", {"error": "read_task_list with invalid task_list_id"})
+        return
+
+    task_list = TaskList.query.filter_by(id=task_list_id).first()
+    if task_list is None:
+        socketio.emit("read_task_list", {"error": "read_task_list with invalid task_list_id"})
+        return
+
+    socketio.emit("read_task_list", task_list.as_json())
 
 
 @socketio.on("create_task")

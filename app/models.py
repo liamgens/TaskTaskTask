@@ -8,8 +8,8 @@ class Task(db.Model):
     list_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), nullable=False)
     sublist_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), unique=True)
 
-    list = db.relationship("List", backref=db.backref("tasks", lazy=False))
-    sublist = db.relationship("List", backref=db.backref("tasks", uselist=False))
+    list = db.relationship("TaskList", backref=db.backref("tasks", lazy=False), foreign_keys=[list_id])
+    sublist = db.relationship("TaskList", foreign_keys=[sublist_id])
 
     def as_json(self):
         return {
