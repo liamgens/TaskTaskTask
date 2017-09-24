@@ -1,16 +1,26 @@
 @import '../variables';
 
 .component__task {
-  > input[type="text"] {
-    border: 0;
-    display: inline-block;
-    height: $input-height;
-  }
+  > .wrapper {
+    > input[type="text"] {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      display: inline-block;
+      height: $input-height;
+      width: $text-input-width;
+    }
 
-  > .add_sublist {
-    text-align: center;
-    display: inline-block;
-    height: $input-height;
-    width: $input-height;
+    > input[type="checkbox"] {
+      background: transparent;
+      border: 0;
+    }
+
+    > .add_sublist {
+      text-align: center;
+      display: inline-block;
+      height: $input-height;
+      width: $input-height;
+    }
   }
 }

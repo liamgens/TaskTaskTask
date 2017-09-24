@@ -4,11 +4,13 @@
   margin-left: 14px;
 
   > input {
+    background: transparent;
     border: 0;
     border-bottom: 1px solid $muted-color;
     border-radius: 0;
     display: inline-block;
     height: $input-height;
+    width: $text-input-width;
 
     &:active, &:focus, &:hover {
       border: 0;
