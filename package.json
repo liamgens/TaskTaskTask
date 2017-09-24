@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "prop-types": "^15.5.10",
+    "socket.io-client": "^2.0.3"
+  }
+}
