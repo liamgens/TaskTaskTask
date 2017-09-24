@@ -3,7 +3,7 @@ from app import db
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String, nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
     is_complete = db.Column(db.Boolean, default=False)
     list_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), nullable=False)
     sublist_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), unique=True)
