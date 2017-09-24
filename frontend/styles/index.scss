@@ -11,7 +11,9 @@
 @import 'global/shapes';
 @import 'global/typography';
 
+@import 'components/create_new_task';
 @import 'components/page';
+@import 'components/task';
 
 * {
   box-sizing: border-box;

@@ -15,6 +15,7 @@ export function connectSocket() {
   onConnect()
   onCreateTaskList()
   onCreateTask()
+  onUpdateTask()
   onReadTaskList()
 }
 
@@ -46,7 +47,19 @@ function onCreateTask() {
     lists[data.list_id].push(data.id)
     tasks[data.id] = data
 
-    store.setState({ lists: lists, tasks: tasks })
+    store.setState({ lists: lists, tasks: tasks, })
+  })
+}
+
+function onUpdateTask() {
+  socket.on(enums.UPDATE_TASK, data => {
+    debug(enums.UPDATE_TASK, [ data, ])
+
+    const tasks = store.getState('tasks')
+
+    tasks[data.id] = data
+
+    store.setState({ tasks: tasks, })
   })
 }
 

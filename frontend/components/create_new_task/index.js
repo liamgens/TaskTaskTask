@@ -1,4 +1,5 @@
 import React from 'react'
+import Icon from 'react-oui-icons'
 
 import { createTask, } from '../../store/api'
 
@@ -6,14 +7,42 @@ export default class CreateNewTask extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = { input: '' }
+
     this.handleClick = this.handleClick.bind(this)
+    this.handleEnter = this.handleEnter.bind(this)
+    this.handleInput = this.handleInput.bind(this)
+
   }
 
   handleClick() {
-    createTask(this.props.listId, 'Another One')
+    if (this.state.value !== '') {
+      createTask(this.props.listId, this.state.value)
+      this.setState({ value: '', })
+    }
+  }
+
+  handleEnter(event) {
+    if (event.key === 'Enter') this.handleClick()
+  }
+
+  handleInput(event) {
+    this.setState({ value: event.target.value, })
   }
 
   render() {
-    return <button onClick={ this.handleClick }>Create New Task</button>
+    return (
+      <div className="component__create_new_task">
+        <input type="text"
+               onChange={ this.handleInput }
+               onKeyPress={ this.handleEnter }
+               value={ this.state.value || '' } />
+        <div className="add_task" onClick={ this.handleClick }>
+          <Icon name="add" description="add" style={
+            { height: '1rem', width: '1rem', }
+          } />
+        </div>
+      </div>
+    )
   }
 }

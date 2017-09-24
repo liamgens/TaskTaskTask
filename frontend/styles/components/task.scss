@@ -1,0 +1,16 @@
+@import '../variables';
+
+.component__task {
+  > input[type="text"] {
+    border: 0;
+    display: inline-block;
+    height: $input-height;
+  }
+
+  > .add_sublist {
+    text-align: center;
+    display: inline-block;
+    height: $input-height;
+    width: $input-height;
+  }
+}

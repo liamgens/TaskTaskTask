@@ -21,3 +21,11 @@ export function createTask(listId, description) {
     list_id: listId,
   })
 }
+
+export function updateTask(taskId, description, isCompleted) {
+  socket.emit(enums.UPDATE_TASK, {
+    description: description,
+    id: taskId,
+    is_complete: isCompleted,
+  })
+}

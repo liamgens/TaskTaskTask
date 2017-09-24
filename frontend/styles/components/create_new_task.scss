@@ -1,0 +1,25 @@
+@import '../variables';
+
+.component__create_new_task {
+  margin-left: 14px;
+
+  > input {
+    border: 0;
+    border-bottom: 1px solid $muted-color;
+    border-radius: 0;
+    display: inline-block;
+    height: $input-height;
+
+    &:active, &:focus, &:hover {
+      border: 0;
+      border-bottom: 1px solid $accent-color;
+    }
+  }
+
+  > .add_task {
+    text-align: center;
+    display: inline-block;
+    height: $input-height;
+    width: $input-height;
+  }
+}
