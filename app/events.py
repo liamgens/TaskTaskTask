@@ -26,8 +26,9 @@ def create_task_list(data=None):
         task.sublist_id = task_list.id
         db.session.commit()
         socketio.emit("update_task", task.as_json(), broadcast=True)
-    return True
-
+    
+    # Return the same data for the user who created the task list to redirect them.
+    return task_list.as_json()
 
 @socketio.on("read_task_list")
 def read_task_list(data):

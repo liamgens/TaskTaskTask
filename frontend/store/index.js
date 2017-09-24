@@ -21,7 +21,13 @@ function onConnect() {
 
 function onCreateTaskList() {
   socket.on(enums.CREATE_TASK_LIST, data => {
-    console.log(enums.CREATE_TASK_LIST + ': ' + data)
+    debug(enums.CREATE_TASK_LIST, [ data, ])
     lists[data.id] = []
   })
+}
+
+function debug(eventName, objects) {
+  console.log('===================================')
+  console.log('Event: ' + eventName)
+  objects.forEach(elem => console.log(elem))
 }
