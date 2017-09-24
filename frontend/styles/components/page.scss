@@ -1,6 +1,7 @@
 @import '../variables';
 
 .component__page {
+  background: linear-gradient(90deg, rgba(249, 246, 253, 0.1), rgba(249, 245, 253, 1));
   min-height: 100vh;
   padding: $interaction-size * 1.5 + $spacing $spacing $spacing $spacing;
   overflow-x: scroll;

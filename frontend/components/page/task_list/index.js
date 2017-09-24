@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import store from 'react-easy-store'
 
-import { readTaskList, } from '../../store/api'
+import { readTaskList, } from '../../../store/api'
 
 import Task from '../task'
 import CreateNewTask from '../create_new_task'

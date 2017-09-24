@@ -13,6 +13,7 @@
 
 @import 'components/create_new_task';
 @import 'components/header';
+@import 'components/landing';
 @import 'components/page';
 @import 'components/task_list';
 @import 'components/task';
@@ -32,7 +33,6 @@ body {
 
 #app {
   height: 100% !important;
-  background-color: rgba(249, 245, 253, 0.5);
 }
 
 hr {

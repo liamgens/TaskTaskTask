@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from 'react-oui-icons'
 import store from 'react-easy-store'
 
-import { updateTask, createTaskList, removeTask } from '../../store/api'
+import { updateTask, createTaskList, removeTask } from '../../../store/api'
 
 import TaskList from '../task_list'
 

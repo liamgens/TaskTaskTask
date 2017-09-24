@@ -1,7 +1,8 @@
 import React from 'react'
 import store from 'react-easy-store'
 
-import TaskList from '../task_list'
+import Header from './header'
+import TaskList from './task_list'
 
 const TaskListConnect = store.connect(TaskList)({
   lists: 'list',
@@ -16,7 +17,10 @@ export default class Page extends React.Component {
 
     return (
       <div className="component__page">
-        <TaskListContainer />
+        <Header />
+        <div className="component__task_list_container">
+          <TaskListContainer />
+        </div>
       </div>
     )
   }

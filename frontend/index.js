@@ -6,7 +6,7 @@ import { getQueryParameterByName, } from './utils/query';
 import { connectSocket, } from './store'
 
 import CreateNewList from './components/create_new_list'
-import Header from './components/header'
+import Landing from './components/landing'
 import Page from './components/page'
 
 import './styles/index.scss'
@@ -26,8 +26,7 @@ const listId = Number(getQueryParameterByName('q')) || null
 
 ReactDOM.render(
   <div>
-    <Header />
-    { listId ? <Page listId={ listId } /> : <CreateNewList /> }
+    { listId ? <Page listId={ listId } /> : <Landing /> }
   </div>,
   document.getElementById('app')
 )
