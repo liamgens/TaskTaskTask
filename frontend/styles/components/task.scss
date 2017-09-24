@@ -2,6 +2,9 @@
 
 .component__task {
   > .wrapper {
+    display: inline-block;
+    border-right: 1px dashed $muted-color;
+
     > input[type="text"] {
       background: transparent;
       border: 0;
