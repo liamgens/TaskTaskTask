@@ -69,7 +69,7 @@ export default class Task extends React.Component {
 
   render() {
     return (
-      <div className="component__task animated fadeIn">
+      <div className="component__task">
         <div className="content">
           <input type="checkbox"
                  checked={ this.props.isCompleted || false }
