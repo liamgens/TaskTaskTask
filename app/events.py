@@ -134,11 +134,11 @@ def _remove_task_list(task_list):
 
 @socketio.on("connect")
 def user_connected():
-    user_count += 1
+    global user_count += 1
     socketio.emit('user_connected', {"user_count": user_count})
 
 
 @socketio.on("disconnect")
 def user_disconnected():
-    user_count -= 1
+    global user_count -= 1
     socketio.emit('user_disconnected', {"user_count": user_count})
