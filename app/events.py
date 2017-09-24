@@ -1,3 +1,5 @@
+from flask_socketio import emit
+
 from app import db, socketio, user_count
 from .models import Task, TaskList
 
@@ -12,22 +14,20 @@ def create_task_list(data=None):
     if isinstance(task_id, int):
         task = Task.query.filter_by(id=task_id).first()
         if task is None:
-            socketio.emit("create_task_list", {
-                          "error": "create_task_list with task_id of non-existent object"})
+            emit("create_task_list", {"error": "create_task_list with task_id of non-existent object"})
             return False
         elif task.sublist is not None:
-            socketio.emit("create_task_list", {
-                          "error": "create_task_list overwriting existing task_id"})
+            emit("create_task_list", {"error": "create_task_list overwriting existing task_id"})
             return False
 
     task_list = TaskList()
     db.session.add(task_list)
     db.session.commit()
-    socketio.emit("create_task_list", task_list.as_json(), broadcast=True)
+    emit("create_task_list", task_list.as_json(), broadcast=True)
     if task is not None:
         task.sublist_id = task_list.id
         db.session.commit()
-        socketio.emit("update_task", task.as_json(), broadcast=True)
+        emit("update_task", task.as_json(), broadcast=True)
 
     # Return the same data for the user who created the task list to redirect them.
     return task_list.as_json()
@@ -40,17 +40,15 @@ def read_task_list(data):
     task_list_id = data.get("id")
 
     if not isinstance(task_list_id, int):
-        socketio.emit("read_task_list", {
-                      "error": "read_task_list with invalid task_list_id"})
+        emit("read_task_list", {"error": "read_task_list with invalid task_list_id"})
         return False
 
     task_list = TaskList.query.filter_by(id=task_list_id).first()
     if task_list is None:
-        socketio.emit("read_task_list", {
-                      "error": "read_task_list with task_list_id of non-existent object"})
+        emit("read_task_list", {"error": "read_task_list with task_list_id of non-existent object"})
         return False
 
-    socketio.emit("read_task_list", task_list.as_json(include_tasks=True))
+    emit("read_task_list", task_list.as_json(include_tasks=True))
     return True
 
 
@@ -62,18 +60,16 @@ def create_task(data):
     list_id = data.get("list_id")
 
     if not isinstance(description, str):
-        socketio.emit("create_task", {
-                      "error": "create_task with invalid description"})
+        emit("create_task", {"error": "create_task with invalid description"})
         return False
     elif not isinstance(list_id, int):
-        socketio.emit("create_task", {
-                      "error": "create_task with invalid list_id"})
+        emit("create_task", {"error": "create_task with invalid list_id"})
         return False
 
     task = Task(description=description, list_id=list_id)
     db.session.add(task)
     db.session.commit()
-    socketio.emit("create_task", task.as_json(), broadcast=True)
+    emit("create_task", task.as_json(), broadcast=True)
     return True
 
 
@@ -83,20 +79,18 @@ def update_task(data):
 
     task_id = data.get("id")
     if not isinstance(task_id, int):
-        socketio.emit("update_task", {
-                      "error": "update_task with invalid task_id"})
+        emit("update_task", {"error": "update_task with invalid task_id"})
         return True
 
     task = Task.query.filter_by(id=task_id).first()
     if task is None:
-        socketio.emit("update_task", {
-                      "error": "update_task with task_id of non-existent object"})
+        emit("update_task", {"error": "update_task with task_id of non-existent object"})
         return False
 
     task.description = data.get("description", task.description)
     task.is_complete = data.get("is_complete", task.is_complete)
     db.session.commit()
-    socketio.emit("update_task", task.as_json(), broadcast=True)
+    emit("update_task", task.as_json(), broadcast=True)
     return True
 
 
@@ -106,20 +100,18 @@ def remove_task(data):
 
     task_id = data.get("id")
     if not isinstance(task_id, int):
-        socketio.emit("remove_task", {
-                      "error": "remove_task with invalid task_id"})
+        emit("remove_task", {"error": "remove_task with invalid task_id"})
         return False
 
     task = Task.query.filter_by(id=task_id).first()
     if task is None:
-        socketio.emit("remove_task", {
-                      "error": "remove_task with task_id of non-existent object"})
+        emit("remove_task", {"error": "remove_task with task_id of non-existent object"})
         return False
 
     _remove_task_list(task.sublist)
     db.session.delete(task)
     db.session.commit()
-    socketio.emit("remove_task", {"id": task_id}, broadcast=True)
+    emit("remove_task", {"id": task_id}, broadcast=True)
     return True
 
 
@@ -134,11 +126,13 @@ def _remove_task_list(task_list):
 
 @socketio.on("connect")
 def user_connected():
-    global user_count += 1
-    socketio.emit('user_connected', {"user_count": user_count})
+    global user_count
+    user_count += 1
+    emit("user_connected", {"user_count": user_count}, broadcast=True)
 
 
 @socketio.on("disconnect")
 def user_disconnected():
-    global user_count -= 1
-    socketio.emit('user_disconnected', {"user_count": user_count})
+    global user_count
+    user_count -= 1
+    emit("user_disconnected", {"user_count": user_count}, broadcast=True)
