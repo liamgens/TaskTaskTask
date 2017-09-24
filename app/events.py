@@ -119,3 +119,4 @@ def _remove_task_list(task_list):
     for task in task_list.tasks:
         _remove_task_list(task.sublist)
         db.session.delete(task)  # commit must be made from calling function
+    db.session.delete(task_list)
