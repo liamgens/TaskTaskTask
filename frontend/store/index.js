@@ -5,7 +5,7 @@ import enums from './enums'
 
 export let socket = null
 export function connectSocket() {
-  socket = io('http://' + document.domain + ':' + location.port)
+  socket = io(location.protocol + '//' + document.domain + ':' + location.port)
 
   store.setState({
     lists: {},
