@@ -11,7 +11,7 @@ const Hero = () => (
         } />
         <h2>TaskTaskTask</h2>
         <h6>
-          Collaborative task manager<br />
+          Live collaborative task tracker<br />
           with infinite possibilities.
         </h6>
         <hr />
