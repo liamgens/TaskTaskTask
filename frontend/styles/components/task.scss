@@ -1,7 +1,8 @@
 @import '../variables';
 
 .component__task {
-  border-left: 1px solid $muted-color;
+  border-left: 1px dotted $muted-color;
+  margin-bottom: 0.1rem;
   padding: 0;
   white-space: nowrap;
 
@@ -13,28 +14,30 @@
       > .icons {
         display: inline-block;
       }
+
+      > input[type="text"] {
+        border-bottom: 1px solid $accent-color;
+      }
     }
 
     > input[type="text"] {
       background: transparent;
       border: 0;
-      border-bottom: 1px solid transparent;
+      border-bottom: 1px solid $muted-color;
       border-radius: 0;
       display: inline-block;
-      height: $input-height;
+      font-size: 2.6rem;
+      height: $input-height * 2;
       margin-left: 1rem;
       margin-bottom: 0.2rem;
       padding: 0;
       width: $text-input-width;
-
-      &:hover, &:active, &:focus {
-        border-bottom: 1px solid $accent-color;
-      }  
     }
 
     > .strikethrough-description {
-      color: $muted-color;
+      opacity: 0.25;
       font-style: italic;
+      font-weight: $font-weight-normal;
       text-decoration: line-through;
     }
   
@@ -53,14 +56,16 @@
         text-align: center;
         height: $input-height;
         width: $input-height;
-
-        > svg {
-        }
       }
     }  
   }
   
   > .component__task_list {
     margin-left: 2.4rem;
+
+    > .tasks > .component__task > .content > input[type="text"] {
+      font-size: 1.6rem;
+      height: $input-height;
+    }
   }
 }

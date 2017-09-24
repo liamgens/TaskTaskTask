@@ -1,6 +1,7 @@
 @import '../variables';
 
 .component__page {
+  min-height: 100vh;
   padding: $interaction-size * 1.5 + $spacing $spacing $spacing $spacing;
   overflow-x: scroll;
 }

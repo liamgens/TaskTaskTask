@@ -1,7 +1,10 @@
 @import '../variables';
 
 .component__create_new_task {
-  border-left: 1px solid $muted-color;
+  border-left: 1px dotted $muted-color;
+  margin-bottom: 0.1rem;
+  padding: 0;
+  white-space: nowrap;
 
   > .content {
     display: inline-block;

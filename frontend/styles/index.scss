@@ -23,13 +23,16 @@
 
 html,
 body {
+  background: url('/static/assets/bg.png');
   color: $print-color;
   height: 100%;
   margin: 0;
+  font-weight: $font-weight-black;
 }
 
 #app {
   height: 100% !important;
+  background-color: rgba(249, 245, 253, 0.5);
 }
 
 hr {

@@ -16,14 +16,14 @@ export default class CreateNewTask extends React.Component {
   }
 
   handleClick() {
-    if (this.state.value !== '') {
+    if (this.state.value && this.state.value !== '') {
       createTask(this.props.listId, this.state.value)
       this.setState({ value: '', })
     }
   }
 
   handleEnter(event) {
-    if (event.key === 'Enter') this.handleClick()
+    if (event.key === 'Enter' && this.state.value !== '') this.handleClick()
   }
 
   handleInput(event) {
