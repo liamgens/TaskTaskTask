@@ -11,12 +11,10 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
-
 socketio = SocketIO(app)
 
 
-from app.views import task_list
-from app.views import task
+from app import events
 
 
 @app.route("/")

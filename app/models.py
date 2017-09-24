@@ -5,8 +5,8 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String, nullable=False)
     is_complete = db.Column(db.Boolean, default=False)
-    list_id = db.Column(db.Integer, db.ForeignKey("list.id"), nullable=False)
-    sublist_id = db.Column(db.Integer, db.ForeignKey("list.id"), unique=True)
+    list_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), nullable=False)
+    sublist_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), unique=True)
 
     list = db.relationship("List", backref=db.backref("tasks", lazy=False))
     sublist = db.relationship("List", backref=db.backref("tasks", uselist=False))
