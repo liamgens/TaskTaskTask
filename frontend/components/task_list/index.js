@@ -12,18 +12,28 @@ export default class TaskList extends React.Component {
     super(props)
 
     readTaskList(props.listId)
+
+    const { lists, tasks, } = store.getState('lists', 'tasks')
+    this.state = {
+      lists: lists,
+      tasks: tasks,
+    }
   }
 
   render() {
-    const { lists, tasks, } = store.getState('lists', 'tasks')
-
+    const { lists, tasks, } = this.state
     return (
       <div className="component__task_list">
         <div className="tasks">
         {
           lists && lists[this.props.listId] && 
           lists[this.props.listId].map((taskId, index) => (
-            <Task taskId={ taskId } key={ index } />
+            <Task sublistId={ tasks[taskId].sublist_id }
+                  id={ tasks[taskId].id }
+                  description={ tasks[taskId].description }
+                  isCompleted={ tasks[taskId].is_complete }
+                  listId={ tasks[taskId].list_id }
+                  key={ index } />
           ))
         }
         </div>

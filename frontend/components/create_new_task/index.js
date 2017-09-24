@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { createNewTask, } from '../../store/api'
+import { createTask, } from '../../store/api'
 
 export default class CreateNewTask extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ export default class CreateNewTask extends React.Component {
   }
 
   handleClick() {
-    createNewTask(this.props.listId, 'Another One')
+    createTask(this.props.listId, 'Another One')
   }
 
   render() {

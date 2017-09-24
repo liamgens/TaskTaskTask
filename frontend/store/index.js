@@ -14,6 +14,8 @@ export function connectSocket() {
 
   onConnect()
   onCreateTaskList()
+  onCreateTask()
+  onReadTaskList()
 }
 
 function onConnect() {
@@ -35,16 +37,36 @@ function onCreateTaskList() {
   })
 }
 
+function onCreateTask() {
+  socket.on(enums.CREATE_TASK, data => {
+    debug(enums.CREATE_TASK, [ data, ])
+
+    const { lists, tasks } = store.getState('lists', 'tasks')
+
+    lists[data.list_id].push(data.id)
+    tasks[data.id] = data
+
+    store.setState({ lists: lists, tasks: tasks })
+  })
+}
+
 function onReadTaskList() {
   socket.on(enums.READ_TASK_LIST, data => {
     debug(enums.READ_TASK_LIST, [ data, ])
 
-    const { lists } = store.getState('lists')
-    lists[data.id] = data.tasks
+    const { lists, tasks } = store.getState('lists', 'tasks')
 
-    store.setState({
-      lists: lists
+    // Save tasks of the list into list store
+    lists[data.id] = data.tasks.map(val => {
+      return val.id
     })
+    
+    // Save tasks into task store
+    data.tasks.forEach(elem => {
+      tasks[elem.id] = elem
+    })
+
+    store.setState({ lists: lists, tasks: tasks })
   })
 }
 

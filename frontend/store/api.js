@@ -16,7 +16,7 @@ export function readTaskList(listId) {
 }
 
 export function createTask(listId, description) {
-  socket.emit(enums.READ_TASK_LIST, {
+  socket.emit(enums.CREATE_TASK, {
     description: description,
     list_id: listId,
   })
