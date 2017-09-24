@@ -74,7 +74,7 @@ def create_task(data):
 def update_task(data):
     """Update the state of a task, given the id of the task and the data to be updated."""
 
-    task_id = data.get("task_id")
+    task_id = data.get("id")
     if not isinstance(task_id, int):
         socketio.emit("update_task", {"error": "update_task with invalid task_id"})
         return True
@@ -95,7 +95,7 @@ def update_task(data):
 def remove_task(data):
     """Delete an existing task and its sublist tree (including other tasks and sublists)"""
 
-    task_id = data.get("task_id")
+    task_id = data.get("id")
     if not isinstance(task_id, int):
         socketio.emit("remove_task", {"error": "remove_task with invalid task_id"})
         return False
