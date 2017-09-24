@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from 'react-oui-icons'
 import store from 'react-easy-store'
 
-import { updateTask, createTaskList } from '../../store/api'
+import { updateTask, createTaskList, removeTask } from '../../store/api'
 
 import TaskList from '../task_list'
 
@@ -23,6 +23,7 @@ export default class Task extends React.Component {
     this.handleInput = this.handleInput.bind(this)
     this.handleEnter = this.handleEnter.bind(this)
     this.handleAddSublist = this.handleAddSublist.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   finishEditingTask() {
@@ -62,6 +63,10 @@ export default class Task extends React.Component {
     createTaskList(this.props.id)
   }
 
+  handleDelete(event) {
+    removeTask(this.props.id)
+  }
+
   render() {
     return (
       <div className="component__task">
@@ -77,8 +82,8 @@ export default class Task extends React.Component {
         {
           this.props.sublistId ?
           <TaskList listId={ this.props.sublistId } /> : (
-            <div className="add_sublist" onClick={ this.handleAddSublist }>
-              <Icon name="add" description="add" style={
+            <div className="add_sublist" onClick={ this.state.isEditing ? this.handleDelete : this.handleAddSublist }>
+              <Icon name={ this.state.isEditing ? "close" : "add" } description="add" style={
                 { height: '1rem', width: '1rem', }
               } />
             </div>

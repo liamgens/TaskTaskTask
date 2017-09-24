@@ -29,3 +29,9 @@ export function updateTask(taskId, description, isCompleted) {
     is_complete: isCompleted,
   })
 }
+
+export function removeTask(taskId) {
+  socket.emit(enums.REMOVE_TASK, {
+    id: taskId,
+  })
+}
