@@ -33,14 +33,16 @@ export default class CreateNewTask extends React.Component {
   render() {
     return (
       <div className="component__create_new_task">
-        <input type="text"
-               onChange={ this.handleInput }
-               onKeyPress={ this.handleEnter }
-               value={ this.state.value || '' } />
-        <div className="add_task" onClick={ this.handleClick }>
-          <Icon name="add" description="add" style={
-            { height: '1rem', width: '1rem', }
-          } />
+        <div className="content">
+          <input type="text"
+                onChange={ this.handleInput }
+                onKeyPress={ this.handleEnter }
+                value={ this.state.value || '' } />
+          <div className="add_task" onClick={ this.handleClick }>
+            <Icon name="add" description="add" style={
+              { height: '1rem', width: '1rem', }
+            } />
+          </div>
         </div>
       </div>
     )

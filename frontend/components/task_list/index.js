@@ -24,7 +24,7 @@ export default class TaskList extends React.Component {
     const { lists, tasks, } = this.state
     return (
       <div className="component__task_list">
-        <div className="tasks">
+        <div className="tasks animated fadeIn">
         {
           lists && lists[this.props.listId] && 
           lists[this.props.listId].map((taskId, index) => (

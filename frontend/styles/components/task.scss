@@ -2,38 +2,64 @@
 
 .component__task {
   border-left: 1px solid $muted-color;
-  padding: 0.2rem 0 0.4rem $spacing / 2;
+  padding: 0;
   white-space: nowrap;
-    
-  > input[type="text"] {
-    background: transparent;
-    border: 0;
-    border-radius: 0;
+
+  > .content {
     display: inline-block;
-    height: $input-height;
-    margin-left: 1rem;
-    margin-bottom: 0.2rem;
-    padding: 0;
-    width: $text-input-width;
-  }
+    padding: 0.25rem 0 0.25rem $spacing / 2;
 
-  > input[type="checkbox"] {
-    background: transparent;
-    border: 0;
-    margin-bottom: 0;
-  }
-
-  > .icons {
-    display: inline-block;
-
-    > .add_sublist {
-      display: inline-block;
-      text-align: center;
-      height: $input-height;
-      width: $input-height;
+    &:hover, &:active, &:focus {
+      > .icons {
+        display: inline-block;
+      }
     }
-  }
 
+    > input[type="text"] {
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      border-radius: 0;
+      display: inline-block;
+      height: $input-height;
+      margin-left: 1rem;
+      margin-bottom: 0.2rem;
+      padding: 0;
+      width: $text-input-width;
+
+      &:hover, &:active, &:focus {
+        border-bottom: 1px solid $accent-color;
+      }  
+    }
+
+    > .strikethrough-description {
+      color: $muted-color;
+      font-style: italic;
+      text-decoration: line-through;
+    }
+  
+    > input[type="checkbox"] {
+      background: transparent;
+      border: 0;
+      margin-bottom: 0;
+    }
+  
+    > .icons {
+      display: none;
+      margin-right: $spacing;
+
+      > .add_sublist {
+        display: inline-block;
+        text-align: center;
+        height: $input-height;
+        width: $input-height;
+
+        > svg {
+        }
+      }
+    }  
+  }
+  
   > .component__task_list {
     margin-left: 2.4rem;
   }

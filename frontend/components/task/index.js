@@ -70,30 +70,33 @@ export default class Task extends React.Component {
   render() {
     return (
       <div className="component__task">
-        <input type="checkbox"
-                checked={ this.props.isCompleted || false }
-                onChange={ this.handleCheckbox } />
-        <input type="text"
-              onBlur={ this.handleBlur }
-              onChange={ this.handleInput }
-              onFocus={ this.handleFocus }
-              onKeyPress={ this.handleEnter }
-              value={ this.state.isEditing ? this.state.description : this.props.description } />
-        <div className="icons">
-          <div className="add_sublist" onClick={ this.handleDelete }>
-            <Icon name="close" description="close" style={
-              { height: '1rem', width: '1rem', }
-            } />
+        <div className="content animated fadeIn">
+          <input type="checkbox"
+                 checked={ this.props.isCompleted || false }
+                 onChange={ this.handleCheckbox } />
+          <input className={ this.props.isCompleted && 'strikethrough-description' }
+                 type="text"
+                 onBlur={ this.handleBlur }
+                 onChange={ this.handleInput }
+                 onFocus={ this.handleFocus }
+                 onKeyPress={ this.handleEnter }
+                 value={ this.state.isEditing ? this.state.description : this.props.description } />
+          <div className="icons">
+            <div className="add_sublist" onClick={ this.handleDelete }>
+              <Icon name="close" description="close" style={
+                { height: '1rem', width: '1rem', }
+              } />
+            </div>
+            {
+              !this.props.sublistId && (
+                <div className="add_sublist" onClick={ this.handleAddSublist }>
+                  <Icon name="add" description="add" style={
+                    { height: '1rem', width: '1rem', }
+                  } />
+                </div>
+              )
+            }
           </div>
-          {
-            !this.props.sublistId && (
-              <div className="add_sublist" onClick={ this.handleAddSublist }>
-                <Icon name="add" description="add" style={
-                  { height: '1rem', width: '1rem', }
-                } />
-              </div>
-            )
-          }
         </div>
         { 
           this.props.sublistId && (
