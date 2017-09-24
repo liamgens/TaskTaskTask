@@ -13,20 +13,20 @@ def create_task_list(data=None):
         task = Task.query.filter_by(id=task_id).first()
         if task is None:
             socketio.emit("create_task_list", {"error": "create_task_list with invalid task_id"})
-            return
+            return False
         elif task.sublist is not None:
             socketio.emit("create_task_list", {"error": "create_task_list overwriting existing task_id"})
-            return
+            return False
 
     task_list = TaskList()
     db.session.add(task_list)
     db.session.commit()
     socketio.emit("create_task_list", task_list.as_json(), broadcast=True)
-
     if task is not None:
         task.sublist_id = task_list.id
         db.session.commit()
         socketio.emit("update_task", task.as_json(), broadcast=True)
+    return True
 
 
 @socketio.on("read_task_list")
