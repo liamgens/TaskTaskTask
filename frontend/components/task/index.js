@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from 'react-oui-icons'
 import store from 'react-easy-store'
 
-import { updateTask, } from '../../store/api'
+import { updateTask, createTaskList } from '../../store/api'
 
 import TaskList from '../task_list'
 
@@ -59,7 +59,7 @@ export default class Task extends React.Component {
   }
 
   handleAddSublist(event) {
-    console.log('adding sublist')
+    createTaskList(this.props.id)
   }
 
   render() {
