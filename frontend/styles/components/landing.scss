@@ -3,6 +3,10 @@
 .component__landing {
   background: linear-gradient(180deg, rgba(172, 167, 179, 0.27), rgba(245, 214, 243, 0.85));
   height: 100vh;
+
+  > .container > .copy {
+    padding: $interaction-size 0;
+  }
 }
 
 .component__hero {
@@ -13,7 +17,16 @@
 
   > .content {
     text-align: center;
-    width: 100%;
+    margin: 0 auto;
+
+    > .logo {
+      align-items: center;
+      display: flex;
+
+      > h1 {
+        margin-left: $spacing;
+      }
+    }
   }
 }
 

@@ -8,7 +8,7 @@ export default class Header extends React.Component {
         <Icon name="align-justify" description="add" fill="white" style={
           { height: '3rem', width: '3rem', }
         } />
-        <span className="logo">TaskTaskTask</span>
+        <a href="/" className="logo">TaskTaskTask</a>
       </div>
     )
   }
