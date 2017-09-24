@@ -1,45 +1,27 @@
-export const lists = {
-  1: [1, 2, 3],
-  2: [4, 5],
-  3: [6, 7],
+import io from 'socket.io-client'
+
+import enums from './enums'
+
+export const lists = {}
+export const tasks = {}
+
+export let socket = null
+export function connectSocket() {
+  socket = io('http://' + document.domain + ':' + location.port)
+
+  onConnect()
+  onCreateTaskList()
 }
 
-export const tasks = {
-  1: {
-    description: "Whaddup up son",
-    isCompleted: false,
-    listId: 1,
-    sublistId: 2,
-  },
-  2: {
-    description: "It's yo dad",
-    isCompleted: false,
-    listId: 1,
-  },
-  3: {
-    description: "Never talk to my son again",
-    isCompleted: true,
-    listId: 1,
-  },
-  4: {
-    description: "Fix tasktasktask's backend because Liam got so many opinions",
-    isCompleted: true,
-    listId: 2,
-  },
-  5: {
-    description: "Memes to Short",
-    isCompleted: false,
-    listId: 2,
-    sublistId: 3,
-  },
-  6: {
-    description: "Windows XP Dialog",
-    isCompleted: false,
-    listId: 3,
-  },
-  7: {
-    description: "Cost of iPhone X",
-    isCompleted: true,
-    listId: 3,
-  },
+function onConnect() {
+  socket.on(enums.CONNECT, () => {
+    console.log('Connected to server via socket.')
+  })
+}
+
+function onCreateTaskList() {
+  socket.on(enums.CREATE_TASK_LIST, data => {
+    console.log(enums.CREATE_TASK_LIST + ': ' + data)
+    lists[data.id] = []
+  })
 }
