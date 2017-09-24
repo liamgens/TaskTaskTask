@@ -17,6 +17,7 @@ export default class Task extends React.Component {
 
     this.finishEditingTask = this.finishEditingTask.bind(this)
     this.handleBlur = this.handleBlur.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
     this.handleCheckbox = this.handleCheckbox.bind(this)
     this.handleInput = this.handleInput.bind(this)
     this.handleEnter = this.handleEnter.bind(this)
@@ -29,7 +30,7 @@ export default class Task extends React.Component {
   }
 
   handleBlur(event) {
-    console.log('unfocused')
+    updateTask(this.props.id, this.state.description, this.state.isCompleted)
   }
 
   handleCheckbox(event) {
@@ -57,10 +58,12 @@ export default class Task extends React.Component {
       <div className="component__task">
         <input type="checkbox" checked={ this.props.isCompleted || false } onChange={ this.handleCheckbox } />
         <input type="text"
+               onBlur={ this.handleBlur }
                onChange={ this.handleInput }
+               onFocus={ this.handleFocus }
                onKeyPress={ this.handleEnter }
-               value={ this.state.description } />
-        { 
+               value={ this.props.description } />
+        {
           this.props.sublistId ?
           <TaskList listId={ this.props.sublistId } /> : (
             <div className="add_sublist" onClick={ this.handleAddSublist }>
