@@ -101,7 +101,7 @@ function onRemoveTask() {
 }
 
 function debug(eventName, objects) {
-  console.log('===================================')
-  console.log('Event: ' + eventName)
-  objects.forEach(elem => console.log(elem))
+  // console.log('===================================')
+  // console.log('Event: ' + eventName)
+  // objects.forEach(elem => console.log(elem))
 }
