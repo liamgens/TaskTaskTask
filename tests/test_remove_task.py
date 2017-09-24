@@ -81,3 +81,59 @@ class TestRemoveTask(BaseTestCase):
         self.assertIsNone(
             TaskList.query.filter_by(id=2).first()
         )
+
+    def test_remove_task_with_2sublists(self):
+        mainlist = TaskList()
+        sublist = TaskList()
+        subsublist = TaskList()
+        self.db.session.add(mainlist)
+        self.db.session.add(sublist)
+        self.db.session.add(subsublist)
+        self.db.session.commit()
+        task = Task(description="mainlisttask", list_id=1, sublist_id=2)
+        task1 = Task(description="sublisttask", list_id=2, sublist_id=3)
+        task2 = Task(description="subsublisttask", list_id=3)
+        self.db.session.add(task)
+        self.db.session.add(task1)
+        self.db.session.add(task2)
+        self.db.session.commit()
+
+        self.assertIsNotNone(
+            Task.query.filter_by(id=1).first()
+        )
+
+        self.assertIsNotNone(
+            Task.query.filter_by(id=2).first()
+        )
+
+        self.assertIsNotNone(
+            Task.query.filter_by(id=3).first()
+        )
+
+        data = task.as_json()
+        self.client.get_received()
+        self.client.emit("remove_task", data)
+
+        self.assertIsNone(
+            Task.query.filter_by(id=1).first()
+        )
+
+        self.assertIsNone(
+            Task.query.filter_by(id=2).first()
+        )
+
+        self.assertIsNone(
+            Task.query.filter_by(id=3).first()
+        )
+
+        self.assertIsNotNone(
+            TaskList.query.filter_by(id=1).first()
+        )
+
+        self.assertIsNone(
+            TaskList.query.filter_by(id=2).first()
+        )
+
+        self.assertIsNone(
+            TaskList.query.filter_by(id=3).first()
+        )
