@@ -17,6 +17,7 @@ export function connectSocket() {
   onCreateTask()
   onUpdateTask()
   onReadTaskList()
+  onRemoveTask()
 }
 
 function onConnect() {
@@ -88,6 +89,12 @@ function onRemoveTask() {
     debug(enums.REMOVE_TASK, [ data, ])
 
     const { lists, tasks, } = store.getState('lists', 'tasks')    
+
+    const taskListId = tasks[data.id].list_id
+    const indexToSplice = lists[taskListId].indexOf(data.id)
+  
+    lists[taskListId].splice(indexToSplice, 1)
+    tasks[data.id] = null
 
     store.setState({ lists: lists, tasks: tasks })
   })

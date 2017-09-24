@@ -9,7 +9,7 @@ const Hero = () => (
         <Icon name="align-justify" description="add" fill="black" style={
           { height: '8rem', width: '8rem', }
         } />
-        <h1>TaskTaskTask</h1>
+        <h2>TaskTaskTask</h2>
         <h6>
           Collaborative task manager<br />
           with infinite possibilities.
