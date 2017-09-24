@@ -12,6 +12,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 socketio = SocketIO(app)
+user_count = 0
 
 
 from app import events
