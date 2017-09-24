@@ -24,5 +24,8 @@ class Task(db.Model):
 class TaskList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    def as_json(self):
-        return {"id": self.id}
+    def as_json(self, include_tasks=False):
+        data = {"id": self.id}
+        if include_tasks:
+            data["tasks"] = [task.as_json() for task in self.tasks]
+        return data

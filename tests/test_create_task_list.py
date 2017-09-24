@@ -1,4 +1,3 @@
-from app import db
 from app.models import Task, TaskList
 from tests import BaseTestCase
 
@@ -27,11 +26,11 @@ class TestCreateTaskList(BaseTestCase):
 
     def test_create_task_list_valid_with_subtask(self):
         task_list = TaskList()
-        db.session.add(task_list)
-        db.session.commit()
+        self.db.session.add(task_list)
+        self.db.session.commit()
         task = Task(description="Foo Bar", list_id=task_list.id)
-        db.session.add(task)
-        db.session.commit()
+        self.db.session.add(task)
+        self.db.session.commit()
 
         self.client.get_received()
         self.client.emit("create_task_list", {"task_id": task.id})

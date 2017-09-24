@@ -30,6 +30,7 @@ def create_task_list(data=None):
     # Return the same data for the user who created the task list to redirect them.
     return task_list.as_json()
 
+
 @socketio.on("read_task_list")
 def read_task_list(data):
     """Read a task list (specified via task_list_id)."""
@@ -45,7 +46,7 @@ def read_task_list(data):
         socketio.emit("read_task_list", {"error": "read_task_list with task_list_id of non-existent object"})
         return False
 
-    socketio.emit("read_task_list", task_list.as_json())
+    socketio.emit("read_task_list", task_list.as_json(include_tasks=True))
     return True
 
 
