@@ -1,0 +1,26 @@
+.shape__wave {
+  height: 15px;
+  position: relative;
+
+  > .wave_shape_1 {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 10px;
+    background-size: 20px 20px;
+  }
+  
+  > .wave_shape_2 {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 15px;
+    background-size: 40px 20px;
+  }
+}

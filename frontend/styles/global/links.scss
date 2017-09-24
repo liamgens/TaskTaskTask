@@ -1,0 +1,9 @@
+@import './variables';
+
+a {
+  color: $accent-color;
+
+  &:hover {
+    color: $accent-secondary-color;
+  }
+}

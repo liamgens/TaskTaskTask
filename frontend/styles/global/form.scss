@@ -1,0 +1,8 @@
+@import './variables';
+
+input[type="text"] {
+  color: $print-color;
+  display: block;
+  height: $interaction-size;
+  margin-bottom: 0;
+}

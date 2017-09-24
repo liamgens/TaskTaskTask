@@ -1,0 +1,68 @@
+@import 'breakpoints';
+
+$base-font-size: 1.6rem;
+$font-size-jump: 0.6;
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: $base-font-size;
+  font-weight: $font-weight-normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: $font-weight-black;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+p {
+  margin-top: 0;
+}
+
+h1 { font-size: ($base-font-size + ($font-size-jump * 6)); }
+h2 { font-size: ($base-font-size + ($font-size-jump * 5)); }
+h3 { font-size: ($base-font-size + ($font-size-jump * 4)); }
+h4 { font-size: ($base-font-size + ($font-size-jump * 3)); }
+h5 { font-size: ($base-font-size + ($font-size-jump * 2)); }
+h6 { font-size: ($base-font-size + ($font-size-jump * 1)); }
+
+// Font-sizes for Markdown are different because they are usually user-content
+// and should be smaller compared to core UI elements.
+.markdown {
+  h1 { font-size: ($base-font-size + ($font-size-jump * 2)); }
+  h2 { font-size: ($base-font-size + ($font-size-jump * 1.5)); }
+  h3 { font-size: ($base-font-size + ($font-size-jump * 1.25)); }
+  h4 { font-size: ($base-font-size + ($font-size-jump * 1)); }
+  h5 { font-size: ($base-font-size + ($font-size-jump * 0.75)); }
+  h6 { font-size: ($base-font-size + ($font-size-jump * 0.5)); }
+}
+
+@include for-tablet-landscape-up {
+  h1 { font-size: ($base-font-size + ($font-size-jump * 8)); }
+  h2 { font-size: ($base-font-size + ($font-size-jump * 7)); }
+  h3 { font-size: ($base-font-size + ($font-size-jump * 6)); }
+  h4 { font-size: ($base-font-size + ($font-size-jump * 5)); }
+  h5 { font-size: ($base-font-size + ($font-size-jump * 4)); }
+  h6 { font-size: ($base-font-size + ($font-size-jump * 3)); }
+
+  // Font-sizes for Markdown are different because they are usually user-content
+  // and should be smaller compared to core UI elements.
+  .markdown {
+    h1 { font-size: ($base-font-size + ($font-size-jump * 3.5)); }
+    h2 { font-size: ($base-font-size + ($font-size-jump * 3)); }
+    h3 { font-size: ($base-font-size + ($font-size-jump * 2.5)); }
+    h4 { font-size: ($base-font-size + ($font-size-jump * 2)); }
+    h5 { font-size: ($base-font-size + ($font-size-jump * 1.5)); }
+    h6 { font-size: ($base-font-size + ($font-size-jump * 1)); }
+  }
+}

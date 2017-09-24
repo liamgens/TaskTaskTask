@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { lists, tasks, } from '../store'
+import { lists, tasks, } from '../../store'
 
 import Task from '../task'
 

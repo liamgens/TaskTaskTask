@@ -1,8 +1,8 @@
 import React from 'react'
 
-import TaskList from '../task_list'
+import { lists, tasks, } from '../../store'
 
-import { lists, tasks, } from '../store'
+import TaskList from '../task_list'
 
 export default class Task extends React.Component {
   constructor(props) {

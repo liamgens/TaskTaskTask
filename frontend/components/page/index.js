@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { lists, tasks, } from '../store'
+import { lists, tasks, } from '../../store'
 
 import TaskList from '../task_list'
 
