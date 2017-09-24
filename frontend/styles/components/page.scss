@@ -1,5 +1,6 @@
 @import '../variables';
 
 .component__page {
-  margin: 0 $spacing;
+  padding: 0 $spacing;
+  overflow-x: scroll;
 }

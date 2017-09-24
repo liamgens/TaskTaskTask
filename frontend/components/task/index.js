@@ -65,27 +65,25 @@ export default class Task extends React.Component {
   render() {
     return (
       <div className="component__task">
-        <div className="wrapper">
-          <input type="checkbox"
-                 checked={ this.props.isCompleted || false }
-                 onChange={ this.handleCheckbox } />
-          <input type="text"
-                onBlur={ this.handleBlur }
-                onChange={ this.handleInput }
-                onFocus={ this.handleFocus }
-                onKeyPress={ this.handleEnter }
-                value={ this.state.isEditing ? this.state.description : this.props.description } />
-          {
-            this.props.sublistId ?
-            <TaskList listId={ this.props.sublistId } /> : (
-              <div className="add_sublist" onClick={ this.handleAddSublist }>
-                <Icon name="add" description="add" style={
-                  { height: '1rem', width: '1rem', }
-                } />
-              </div>
-            )
-          }
-        </div>
+        <input type="checkbox"
+                checked={ this.props.isCompleted || false }
+                onChange={ this.handleCheckbox } />
+        <input type="text"
+              onBlur={ this.handleBlur }
+              onChange={ this.handleInput }
+              onFocus={ this.handleFocus }
+              onKeyPress={ this.handleEnter }
+              value={ this.state.isEditing ? this.state.description : this.props.description } />
+        {
+          this.props.sublistId ?
+          <TaskList listId={ this.props.sublistId } /> : (
+            <div className="add_sublist" onClick={ this.handleAddSublist }>
+              <Icon name="add" description="add" style={
+                { height: '1rem', width: '1rem', }
+              } />
+            </div>
+          )
+        }
       </div>
     )
   }

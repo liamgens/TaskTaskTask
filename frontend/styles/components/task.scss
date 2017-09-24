@@ -1,29 +1,31 @@
 @import '../variables';
 
 .component__task {
-  > .wrapper {
+  white-space: nowrap;
+    
+  > input[type="text"] {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
     display: inline-block;
-    border-right: 1px dashed $muted-color;
+    height: $input-height;
+    width: $text-input-width;
+  }
 
-    > input[type="text"] {
-      background: transparent;
-      border: 0;
-      border-radius: 0;
-      display: inline-block;
-      height: $input-height;
-      width: $text-input-width;
-    }
+  > input[type="checkbox"] {
+    background: transparent;
+    border: 0;
+    margin-bottom: 0;
+  }
 
-    > input[type="checkbox"] {
-      background: transparent;
-      border: 0;
-    }
+  > .add_sublist {
+    text-align: center;
+    display: inline-block;
+    height: $input-height;
+    width: $input-height;
+  }
 
-    > .add_sublist {
-      text-align: center;
-      display: inline-block;
-      height: $input-height;
-      width: $input-height;
-    }
+  > .component__task_list {
+    margin-left: 2.4rem;
   }
 }
