@@ -7,7 +7,9 @@ const Landing = () => (
     <Hero />
     <div className="container">
       <div className="copy">
-        <img className="u-max-full-width" src="/static/assets/screen2.jpg" />
+        <div className="copy-image">
+          <img className="u-max-full-width" src="/static/assets/screen2.jpg" />
+        </div>
         <hr />
         <div className="row">
           <div className="eight columns">
@@ -23,7 +25,9 @@ const Landing = () => (
           </div>
         </div>
         <hr />
-        <img className="u-max-full-width" src="/static/assets/tech.png" />
+        <div className="copy-image">
+          <img className="u-max-full-width" src="/static/assets/tech.png" />
+        </div>
       </div>
     </div>
   </div>

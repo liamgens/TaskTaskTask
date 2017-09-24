@@ -6,6 +6,11 @@
 
   > .container > .copy {
     padding: $interaction-size 0;
+
+    > .copy-image {
+      text-align: center;
+      width: 100%;
+    }
   }
 }
 
