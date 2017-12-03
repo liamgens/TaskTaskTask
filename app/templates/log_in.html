@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Log In</title>
+</head>
+<body>
+  <h1>Log In</h1>
+
+  <form method="post">
+    {{ form.csrf_token }}
+    <label>
+      {{ form.email_address.label.text }}
+      {{ form.email_address }}
+    </label>
+    <label>
+      {{ form.password.label.text }}
+      {{ form.password }}
+    </label>
+    <button>Log In</button>
+  </form>
+</body>
+</html>

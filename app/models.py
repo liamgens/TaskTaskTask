@@ -1,4 +1,23 @@
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from app import db
+
+
+class DefaultAccessControl:
+    PUBLIC_EDIT = "public-edit"  # anyone can view, check and edit
+    # PUBLIC_CHECK = "public-check"  # anyone can view and check/uncheck
+    # PUBLIC_CHECK_LOCAL = "public-check-local  # anyone can view and check/uncheck (locally)
+    PUBLIC_VIEW = "public-view"  # anyone can view
+    # TODO password-protected variants of public controls
+    PRIVATE = "private"  # only specific users can access
+
+
+class UserAccessControl:
+    READ = "read"  # user can read
+    CHECK = "check"  # user can read and check
+    EDIT = "edit"  # user can read, check, and edit
+    MANAGE = "manage"  # user can read, check, edit, and manage (modify access)
 
 
 class Task(db.Model):
@@ -23,9 +42,47 @@ class Task(db.Model):
 
 class TaskList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    task_page_id = db.Column(db.Integer, db.ForeignKey("task_page.id"), nullable=False)
+
+    task_page = db.relationship("TaskPage", backref=db.backref("task_lists"), foreign_keys=[task_page_id])
 
     def as_json(self, include_tasks=False):
         data = {"id": self.id}
         if include_tasks:
             data["tasks"] = [task.as_json() for task in self.tasks]
         return data
+
+
+class TaskPage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    root_task_list_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), unique=True)
+    default_access_control = db.Column(db.String(50), nullable=False, default=DefaultAccessControl.PRIVATE)
+
+    root_task_list = db.relationship("TaskList", foreign_keys=[root_task_list_id])
+
+
+class TaskPageAccess(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    task_page_id = db.Column(db.Integer, db.ForeignKey("task_page.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    access_level = db.Column(db.String(50), nullable=False)
+
+    task_page = db.relationship("TaskPage")
+    user = db.relationship("User")
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email_address = db.Column(db.String(255), nullable=False, unique=True)
+    _password = db.Column("password", db.String(255), nullable=False)
+
+    @property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def password(self, value):
+        self._password = generate_password_hash(value)
+
+    def check_password(self, value):
+        return check_password_hash(self.password, value)

@@ -1,7 +1,21 @@
-from flask_socketio import emit
+import functools
+
+from flask_login import current_user
+from flask_socketio import disconnect, emit, join_room, leave_room
 
 from app import db, socketio, user_count
-from .models import Task, TaskList
+from .models import Task, TaskList, TaskPage
+
+
+# Example decorator for requiring logged in users... more planning needed
+def login_required(event_function):
+    @functools.wraps(event_function)
+    def wrapped(*args, **kwargs):
+        if not current_user.is_authenticated:
+            disconnect()
+        else:
+            return event_function(*args, **kwargs)
+    return wrapped
 
 
 @socketio.on("create_task_list")
@@ -21,9 +35,17 @@ def create_task_list(data=None):
             return False
 
     task_list = TaskList()
+    if task is None:
+        task_list.task_page = TaskPage()
+    else:
+        task_list.task_page = task.list.task_page
     db.session.add(task_list)
     db.session.commit()
+    if task is None:
+        task_list.task_page.root_task_list = task_list
+        db.session.commit()
     emit("create_task_list", task_list.as_json(), broadcast=True)
+
     if task is not None:
         task.sublist_id = task_list.id
         db.session.commit()
