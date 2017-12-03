@@ -1,4 +1,4 @@
-import  unittest
+import unittest
 
 from flask_script import Manager
 
@@ -15,7 +15,7 @@ def make_shell_context():
 
 @manager.command
 def runserver():
-   socketio.run(app)
+    socketio.run(app)
 
 
 @manager.command
