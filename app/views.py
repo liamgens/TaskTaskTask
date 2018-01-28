@@ -13,7 +13,7 @@ def home():
 def log_in():
     form = forms.LogInForm()
     if form.validate_on_submit():
-        user = models.User.filter_by(email_address=form.email_address.data).first()
+        user = models.User.query.filter_by(email_address=form.email_address.data).first()
         if user is not None and user.check_password(form.password.data):
             login_user(user)
             return redirect(url_for("home"))

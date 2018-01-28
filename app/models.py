@@ -9,15 +9,31 @@ class DefaultAccessControl:
     # PUBLIC_CHECK = "public-check"  # anyone can view and check/uncheck
     # PUBLIC_CHECK_LOCAL = "public-check-local  # anyone can view and check/uncheck (locally)
     PUBLIC_VIEW = "public-view"  # anyone can view
-    # TODO password-protected variants of public controls
+    # TODO: password-protected variants of public controls
     PRIVATE = "private"  # only specific users can access
+
+    @classmethod
+    def readable(cls):
+        return cls.writable() + [cls.PUBLIC_VIEW]
+
+    @classmethod
+    def writable(cls):
+        return [cls.PUBLIC_EDIT]
 
 
 class UserAccessControl:
     READ = "read"  # user can read
-    CHECK = "check"  # user can read and check
+    # CHECK = "check"  # user can read and check
     EDIT = "edit"  # user can read, check, and edit
     MANAGE = "manage"  # user can read, check, edit, and manage (modify access)
+
+    @classmethod
+    def readable(cls):
+        return cls.writable() + [cls.READ]
+
+    @classmethod
+    def writable(cls):
+        return [cls.MANAGE, cls.EDIT]
 
 
 class Task(db.Model):
@@ -56,9 +72,33 @@ class TaskList(db.Model):
 class TaskPage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     root_task_list_id = db.Column(db.Integer, db.ForeignKey("task_list.id"), unique=True)
-    default_access_control = db.Column(db.String(50), nullable=False, default=DefaultAccessControl.PRIVATE)
+    default_access_control = db.Column(db.String(50), nullable=False, default=DefaultAccessControl.PUBLIC_EDIT)
 
     root_task_list = db.relationship("TaskList", foreign_keys=[root_task_list_id])
+
+    def _get_user_access_level(self, user):
+        access = TaskPageAccess.query.filter_by(user=user, task_page=self).first()
+        if access is not None:
+            return access.access_level
+        return None
+
+    def is_readable_by(self, user):
+        if self.default_access_control in DefaultAccessControl.readable():
+            return True
+        if not user.is_authenticated:
+            return False
+        if self._get_user_access_level(user) in UserAccessControl.readable():
+            return True
+        return False
+
+    def is_writable_by(self, user):
+        if self.default_access_control in DefaultAccessControl.writable():
+            return True
+        if not user.is_authenticated:
+            return False
+        if self._get_user_access_level(user) in UserAccessControl.writable():
+            return True
+        return False
 
 
 class TaskPageAccess(db.Model):

@@ -1,24 +1,55 @@
 import functools
 
 from flask_login import current_user
-from flask_socketio import disconnect, emit, join_room, leave_room
+from flask_socketio import emit, join_room, leave_room
 
 from app import db, socketio, user_count
 from .models import Task, TaskList, TaskPage
 
 
-# Example decorator for requiring logged in users... more planning needed
-def login_required(event_function):
-    @functools.wraps(event_function)
-    def wrapped(*args, **kwargs):
-        if not current_user.is_authenticated:
-            disconnect()
-        else:
-            return event_function(*args, **kwargs)
-    return wrapped
+def verify_access(read_only=False, task_field=None, task_list_field=None):
+    assert task_field is None or task_list_field is None
+
+    def decorator(event_function):
+        @functools.wraps(event_function)
+        def wrapper(data=None):
+            # Without data, there's nothing to check against, so allow
+            if data is None:
+                return event_function()
+
+            # If we don't know about a task page, we can't verify access to it
+            task_page = None
+            if task_field is not None:
+                task_id = data.get(task_field)
+                if task_id is not None:
+                    task = Task.query.get(task_id)
+                    task_page = task.list.task_page
+            elif task_list_field is not None:
+                task_list_id = data.get(task_list_field)
+                if task_list_id is not None:
+                    task_list = TaskList.query.get(task_list_id)
+                    task_page = task_list.task_page
+            if task_page is None:
+                return event_function(data=data)
+
+            # Actually verify access not that we have a task page
+            if read_only:
+                if not task_page.is_readable_by(current_user):
+                    emit("access_denied", {"cannot read"})
+                    return
+            else:
+                if not task_page.is_writable_by(current_user):
+                    emit("access_denied", {"cannot write"})
+                    return
+
+            # We haven't been denied access, so all is well
+            return event_function(data=data)
+        return wrapper
+    return decorator
 
 
 @socketio.on("create_task_list")
+@verify_access(task_field="task_id")
 def create_task_list(data=None):
     """Create a task list (with an optional task_id for making it a sublist of a task)."""
 
@@ -56,6 +87,7 @@ def create_task_list(data=None):
 
 
 @socketio.on("read_task_list")
+@verify_access(read_only=True, task_list_field="id")
 def read_task_list(data):
     """Read a task list (specified via task_list_id)."""
 
@@ -75,6 +107,7 @@ def read_task_list(data):
 
 
 @socketio.on("create_task")
+@verify_access(task_list_field="list_id")
 def create_task(data):
     """Create a new task and associate it with a specified list."""
 
@@ -96,6 +129,7 @@ def create_task(data):
 
 
 @socketio.on("update_task")
+@verify_access(task_field="id")
 def update_task(data):
     """Update the state of a task, given the id of the task and the data to be updated."""
 
@@ -117,6 +151,7 @@ def update_task(data):
 
 
 @socketio.on("remove_task")
+@verify_access(task_field="id")
 def remove_task(data):
     """Delete an existing task and its sublist tree (including other tasks and sublists)"""
 
